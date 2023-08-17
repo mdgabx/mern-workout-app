@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 function App() {
 
   return (
-    <div className="App">
+    <div className="App m-0 p-0">
       <BrowserRouter>
         <Navbar />
         <div className="pages">
