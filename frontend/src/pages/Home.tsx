@@ -1,9 +1,12 @@
 
 const Home = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-  </h1>
+   <div className="flex align-center justify-start m-8">
+    Home
+      <div className="grid grid-cols-2">
+
+      </div>
+    </div>
   )
 }
 
