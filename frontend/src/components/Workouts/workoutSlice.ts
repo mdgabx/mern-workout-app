@@ -9,6 +9,7 @@ const initialState = {
 
 export const fetchWorkouts = createAsyncThunk('workouts/fetchWorkouts', async () => {
     const response = await axios.get('http://localhost:4000/api/workouts')
+
     return response.data
 })
 

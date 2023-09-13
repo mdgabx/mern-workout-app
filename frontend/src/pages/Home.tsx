@@ -1,36 +1,51 @@
-import { useEffect, useState } from "react"
-import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux"
+import { getStatus, getWorkouts } from "../components/Workouts/workoutSelectors"
+import { useEffect } from 'react'
+import { fetchWorkouts } from "../components/Workouts/workoutSlice"
+import WorkoutDetails from "../components/workoutDetails"
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState([])
+  const workouts = useSelector(getWorkouts)
+  const dispatch = useDispatch();
+  const status = useSelector(getStatus)
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/workouts')
-      .then((res) => {
-        const result = res.data
+    dispatch(fetchWorkouts() as any)
+  }, [dispatch])
 
-        setWorkouts(result)
-      })
-      .catch((err) => console.warn(err))
-    
-  }, [])
 
   return (
    <div className="flex align-center justify-start flex-col m-8">
       <div className="grid grid-cols-2 p-5">
-          <div className="workouts p-5">
-            { workouts?.length ? (
-                  workouts?.map((workout: any) => (
-                    <p key={workout._id}>
-                      { workout.title }
-                    </p>
-                  ))
-            ) : (
+          <div className="p-5">
+            { status === 'pending' ? (
               <div>
                 Loading...
               </div>
-            )
-           }
+            ) : status === 'rejected' ? (
+              <div>
+                Error...
+              </div>
+            ): (
+              workouts?.map((workout: {
+                title: string,
+                _id: string,
+                load: number,
+                reps: number,
+              }) => {
+
+                  return (
+                    <WorkoutDetails
+                      key={workout._id} 
+                      title={workout.title}
+                      load={workout.load}
+                      reps={workout.reps}
+                    />
+                  )
+                }
+                
+                ) 
+            ) }
           </div>
       </div>
     </div>

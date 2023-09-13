@@ -6,7 +6,7 @@ const Navbar = () => {
         <header className="p-8 bg-cyan-800">
             <div className="container">
                 <Link to="/" >
-                    <h1 className="text-xl text-white">Workout App</h1>
+                    <h1 className="text-3xl text-white font-poppins font-bold">Workout App</h1>
                 </Link>
             </div>
         </header>
