@@ -13,6 +13,7 @@ app.use(express.json()) // get the request body
 
 app.use((req, res, next) => {
     console.log(req.path, req.method)
+    res.header('Access-Control-Allow-Origin', '*'); // allow CORS 
     next()
 })
 
