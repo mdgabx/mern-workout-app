@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { getStatus, getWorkouts } from "../components/Workouts/workoutSelectors"
 import { useEffect } from 'react'
 import { fetchWorkouts } from "../components/Workouts/workoutSlice"
-import WorkoutDetails from "../components/workoutDetails"
+import WorkoutDetails from "../components/WorkoutDetails"
+import WorkoutForm from "../components/WorkoutForm"
 
 const Home = () => {
   const workouts = useSelector(getWorkouts)
@@ -15,9 +16,9 @@ const Home = () => {
 
 
   return (
-   <div className="flex align-center justify-start flex-col m-8">
-      <div className="grid grid-cols-2 p-5">
-          <div className="p-5">
+   <div className="w-full flex items-center m-8">
+      <div className="w-full flex flex-row items-stretch justify-center">
+          <div className="w-2/3">
             { status === 'pending' ? (
               <div>
                 Loading...
@@ -47,6 +48,7 @@ const Home = () => {
                 ) 
             ) }
           </div>
+          <WorkoutForm />
       </div>
     </div>
   )
