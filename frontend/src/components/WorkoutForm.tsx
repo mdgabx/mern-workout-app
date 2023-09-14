@@ -1,19 +1,57 @@
+import * as Yup from 'yup';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from "@hookform/resolvers/yup"
+
+// setting up the schema
+
+const workoutSchema = Yup.object().shape({
+    title: Yup.string().max(20, 'Only 20 characters at most').required('Title is required'),
+    reps: Yup.number().required('Number of reps is required'),
+    load: Yup.number().required('Number of load is required'),
+})
+
+// interface for the form inputs 
+export interface FormInputs {
+    title: string,
+    load: number,
+    reps: number,
+}
 
 
 const WorkoutForm = () => {
+
+    // set up react hook form libraries for the workout form
+    const { 
+        register, 
+        handleSubmit,
+        formState: { errors },
+     } = useForm<FormInputs>({
+        resolver: yupResolver(workoutSchema)
+    });
+
+    // function to handle form submit
+    const workoutFormSubmit:SubmitHandler<FormInputs> = (data) => {
+        console.log('data submitted', data)
+    }
+
     return (
-        <form className="w-1/3 flex flex-col align-center justify-start mx-8 px-8 py-6">
-            <h4>Workout Form</h4>
-            <label>Title: </label>
-            <input type="text" />
+        <form 
+        className="w-1/3 flex flex-col align-center justify-start mx-8 px-8 py-6" 
+        onSubmit={handleSubmit(workoutFormSubmit)}>
+            <h4 className="text-cyan-800 text-xl font-bold my-4 font-poppins">Workout Form</h4>
+            <label className="my-2 font-poppins">Title: </label>
+            <input className="shadow-md rounded-md p-2 my-2 font-poppins" type="text" {...register('title')} />
+            <p className="font-poppins text-red-800">{errors.title?.message}</p>
 
-            <label>Loads: </label>
-            <input type="number" />
+            <label className="my-2 font-poppins">Loads: </label>
+            <input className="shadow-md rounded-md p-2 my-2 font-poppins" type="number" {...register('load')}/>
+            <p className="font-poppins text-red-800">{errors.load?.message}</p>
 
-            <label>Reps: </label>
-            <input type="number" />
+            <label className="my-2 font-poppins">Reps: </label>
+            <input className="shadow-md rounded-md p-2 my-2 font-poppins" type="number" {...register('reps')} />
+            <p className="font-poppins text-red-800">{errors.reps?.message}</p>
 
-            <button type="submit">Submit</button>
+            <button className="w-20 py-3 rounded-md text-center mx-auto mt-4 text-white bg-cyan-800 font-poppins" type="submit">Submit</button>
           
         </form>
 
