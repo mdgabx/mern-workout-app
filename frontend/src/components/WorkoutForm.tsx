@@ -1,6 +1,9 @@
 import * as Yup from 'yup';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup"
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { fetchWorkouts } from './Workouts/workoutSlice';
 
 // setting up the schema
 
@@ -17,8 +20,9 @@ export interface FormInputs {
     reps: number,
 }
 
-
 const WorkoutForm = () => {
+
+    const dispatch = useDispatch();
 
     // set up react hook form libraries for the workout form
     const { 
@@ -30,8 +34,16 @@ const WorkoutForm = () => {
     });
 
     // function to handle form submit
-    const workoutFormSubmit:SubmitHandler<FormInputs> = (data) => {
-        console.log('data submitted', data)
+    const workoutFormSubmit:SubmitHandler<FormInputs> = async (data) => {
+        // send the data in form to the database
+        try {
+            await axios.post('http://localhost:4000/api/workouts', data)
+
+            dispatch(fetchWorkouts() as any)
+           
+        } catch (err) {
+            console.log('err', err)
+        }
     }
 
     return (
@@ -51,7 +63,11 @@ const WorkoutForm = () => {
             <input className="shadow-md rounded-md p-2 my-2 font-poppins" type="number" {...register('reps')} />
             <p className="font-poppins text-red-800">{errors.reps?.message}</p>
 
-            <button className="w-20 py-3 rounded-md text-center mx-auto mt-4 text-white bg-cyan-800 font-poppins" type="submit">Submit</button>
+            <button 
+            className="w-20 py-3 rounded-md text-center mx-auto mt-4 text-white bg-cyan-800 font-poppins" 
+            type="submit">
+                Submit
+            </button>
           
         </form>
 
