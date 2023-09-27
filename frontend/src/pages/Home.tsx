@@ -37,6 +37,7 @@ const Home = () => {
 
                   return (
                     <WorkoutDetails
+                      id={workout._id}
                       key={workout._id} 
                       title={workout.title}
                       load={workout.load}

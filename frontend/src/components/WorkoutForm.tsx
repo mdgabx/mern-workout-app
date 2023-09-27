@@ -39,10 +39,10 @@ const WorkoutForm = () => {
         try {
             await axios.post('http://localhost:4000/api/workouts', data)
 
-            dispatch(fetchWorkouts() as any)
+            dispatch(fetchWorkouts() as any) // reload the data after the successful submission
            
         } catch (err) {
-            console.log('err', err)
+            console.warn('err', err)
         }
     }
 

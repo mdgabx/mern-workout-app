@@ -1,21 +1,36 @@
+import { useDispatch } from "react-redux"
+import { deleteWorkout, fetchWorkouts } from "./Workouts/workoutSlice"
 
 const WorkoutDetails:React.FC<{ 
+    id: string,
     title: string, 
     reps: number, 
     load: number 
 }> = ({
+    id,
     title, 
     reps, 
-    load }) => 
-{
+    load }) => {
+    
+    const dispatch = useDispatch()
+
+
+    const handleDelete = () => {
+        dispatch(deleteWorkout(id))
+        dispatch(fetchWorkouts())        
+    }
+
 
     return (
-        <div className="bg-white my-4 rounded-md shadow-lg p-5">
+        <div className="bg-white my-4 rounded-md shadow-lg p-5 relative">
             <h4 className="text-cyan-800 my-4 font-bold font-poppins text-lg">{ title }</h4>
             <div>
                 <p className="font-poppins"><span className="font-bold font-poppins">load(kg):</span> { load }</p>
                 <p className="font-poppins"><span className="font-bold">reps:</span> { reps }</p>
             </div>
+            <button className="bg-gray-200 p-2 rounded-full font-poppins absolute top-2 right-2"
+                onClick={handleDelete}
+            >Delete</button>
         </div>
     )
 }
