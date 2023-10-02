@@ -40,7 +40,7 @@ const workoutSlice = createSlice({
       })
       .addCase(deleteWorkout.fulfilled, (state, action) => {
         // Use the 'workoutId' from the action payload to filter the workouts
-        state.workouts = state.workouts.filter((workout) => workout._id !== action.payload);
+        state.workouts = state.workouts.filter((workout) => workout.id !== action.payload);
       });
   },
 });

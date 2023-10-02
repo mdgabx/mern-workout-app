@@ -33,6 +33,7 @@ const Home = () => {
                 _id: string,
                 load: number,
                 reps: number,
+                createdAt: string,
               }) => {
 
                   return (
@@ -42,6 +43,8 @@ const Home = () => {
                       title={workout.title}
                       load={workout.load}
                       reps={workout.reps}
+                      createdAt={workout.createdAt}
+
                     />
                   )
                 }
