@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import { formatDistanceToNow } from "date-fns"
 import { deleteWorkout, fetchWorkouts } from "./Workouts/workoutSlice"
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const WorkoutDetails:React.FC<{ 
     id: string,
@@ -32,11 +33,12 @@ const WorkoutDetails:React.FC<{
                 <p className="font-poppins"><span className="font-bold">reps:</span> { reps }</p>
                 <span className="font-poppins text-sm font-bold">{ formatDistanceToNow(new Date(createdAt), { addSuffix: true}) }</span>
             </div>
-            <button className="bg-gray-200 p-2 rounded-full font-poppins absolute top-2 right-2"
+            <button className="bg-gray-200 hover:bg-cyan-800 hover:text-white p-2 rounded-full font-poppins absolute top-2 right-2"
                 onClick={handleDelete}
-            >Delete</button>
+            ><FaRegTrashAlt /></button>
         </div>
     )
 }
+
 
 export default WorkoutDetails;
