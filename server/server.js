@@ -2,11 +2,16 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 const cors = require('cors')
 const workoutRoutes = require('./routes/workouts')
 
 // express app
 const app = express()
+
+// Proxy requests starting with /api/ to the API server
+app.use('/api', createProxyMiddleware({ target: `http://localhost:${process.env.PORT}`, changeOrigin: true }));
 
 // middleware
 app.use(express.json()) // get the request body
@@ -27,7 +32,7 @@ mongoose.connect(process.env.MONGO_URI)
 
         // app listen for request
         app.listen(process.env.PORT, () => {
-            console.log('Listening to port 4000 and connected to DB...', process.env.PORT)
+            console.log('Listening to port and connected to DB...', process.env.PORT)
         })
     })
     .catch((err) => console.warn(err) )

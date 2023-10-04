@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { fetchWorkouts } from "../components/Workouts/workoutSlice"
 import WorkoutDetails from "../components/WorkoutDetails"
 import WorkoutForm from "../components/WorkoutForm"
+import { Workout } from "../components/Workouts/workoutSlice"
 
 const Home = () => {
   const workouts = useSelector(getWorkouts)
@@ -28,13 +29,7 @@ const Home = () => {
                 Error...
               </div>
             ): (
-              workouts?.map((workout: {
-                title: string,
-                _id: string,
-                load: number,
-                reps: number,
-                createdAt: string,
-              }) => {
+              workouts?.map((workout: Workout) => {
 
                   return (
                     <WorkoutDetails
