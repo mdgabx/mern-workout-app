@@ -12,7 +12,7 @@ interface LoginPayload {
     email: string;
     password: string;
     token: string;
-  }
+}
 
   export const loginUser = createAsyncThunk<LoginPayload, { email: string, password: string }>(
     'auth/loginUser', 
@@ -48,7 +48,7 @@ const authSlice = createSlice({
                 state.token = action.payload.token
                 state.status = 'fulfilled'
             })
-            .addCase(logoutUser.fulfilled, (state, action) => {
+            .addCase(logoutUser.fulfilled, (state) => {
                 state.isAuthenticated = false,
                 state.token = null
             })
