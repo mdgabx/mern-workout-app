@@ -1,16 +1,27 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type LoginInputs = {
     email: string
     password: string
 }
 
+// login yup schema
+
+const loginSchema = Yup.object().shape({
+    email: Yup.string().required("Email address is required"),
+    password: Yup.string().required("Password is required")
+}) 
+
 const Login = () => {
     const { 
         register, 
         handleSubmit, 
         formState: {errors}, 
-    } = useForm<LoginInputs>()
+    } = useForm<LoginInputs>({
+        resolver: yupResolver(loginSchema)
+    })
 
     const onSubmit:SubmitHandler<LoginInputs> = (data) => {
         console.log('Login', data)
