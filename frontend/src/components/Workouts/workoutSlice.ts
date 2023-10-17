@@ -20,13 +20,13 @@ type DeleteWorkoutPayload = string; // Assuming your workout ID is a string
 
 // Define the types for the async thunk actions
 export const fetchWorkouts = createAsyncThunk<Workout[], void>('workouts/fetchWorkouts', async () => {
-  const response = await axios.get('http:/localhost:4000/api/workouts');
+  const response = await axios.get('http://localhost:4000/api/workouts');
   return response.data;
 });
 
 export const deleteWorkout = createAsyncThunk<DeleteWorkoutPayload, string>('workouts/deleteWorkout', async (workoutId) => {
   try {
-    await axios.delete(`http:/localhost:4000/api/workouts/${workoutId}`);
+    await axios.delete(`http://localhost:4000/api/workouts/${workoutId}`);
     return workoutId;
   } catch (err) {
     console.error(err);
