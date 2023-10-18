@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { loginUser } from '../components/Authentication/authSlice';
 
 type SignUpInputs = {
     email: string
@@ -23,7 +24,16 @@ const Signup = () => {
     })
 
     const onSubmit:SubmitHandler<SignUpInputs> = (data) => {
-        console.log('signup', data)
+
+        console.log('data', data);
+
+        const { email, password } = data
+
+        const response = loginUser({ email, password })
+
+        console.log('response', response)
+        
+        
     }
 
     return (

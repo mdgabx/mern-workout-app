@@ -1,6 +1,8 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { loginUser } from '../components/Authentication/authSlice';
+import { useDispatch } from 'react-redux';
 
 type LoginInputs = {
     email: string
@@ -15,6 +17,8 @@ const loginSchema = Yup.object().shape({
 }) 
 
 const Login = () => {
+    const dispatch = useDispatch();
+
     const { 
         register, 
         handleSubmit, 
@@ -22,15 +26,26 @@ const Login = () => {
     } = useForm<LoginInputs>({
         resolver: yupResolver(loginSchema)
     })
-
-    const onSubmit:SubmitHandler<LoginInputs> = (data) => {
-        console.log('Login', data)
-    }
+    const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
+        console.log('Login', data);
+    
+        const { email, password } = data;
+    
+        try {
+          const response = await dispatch(loginUser({ email, password })) as PayloadAction<LoginPayload>;
+    
+          console.log('Login successful', response.payload);
+          // Handle successful login, e.g., redirect to a different page
+        } catch (error) {
+          console.error('Login error', error);
+          // Handle login error, e.g., display an error message to the user
+        }
+    };
 
     return (
         <div className="flex mt-10 items-center justify-center">
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white w-2/5 mt-10 rounded-lg p-6 font-poppins">
-                <h3 className="font-bold text-2xl mb-5">Sign up</h3>
+                <h3 className="font-bold text-2xl mb-5">Login</h3>
 
                 <div className="flex flex-col my-3">    
                 <label className="font-bold">Email:</label>

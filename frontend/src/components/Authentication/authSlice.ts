@@ -19,6 +19,8 @@ interface LoginPayload {
     async ({ email, password }, { rejectWithValue }) => {
         try {
             const response = await axios.post('http://localhost:4000/api/user/login', { email, password });
+            console.log('response', response)
+          
             return { email, password, token: response.data.token };
         } catch (err) {
             
